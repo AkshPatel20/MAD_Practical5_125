@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import android.app.AlarmManager;
+import android.provider.AlarmClock
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,15 +31,17 @@ class MainActivity : AppCompatActivity() {
             Intent(ACTION_DIAL,Uri.parse("tel: $number")).also{startActivity(it)}
         }
         findViewById<Button>(R.id.button_calllog).setOnClickListener{
-            val showCallLog = Intent(ACTION_VIEW,Uri.parse("content://call_log/calls"))
-            startActivity(showCallLog)
+            Intent(ACTION_VIEW,Uri.parse("content://call_log/calls")).also{startActivity(it)}
+
         }
         findViewById<Button>(R.id.button_gallery).setOnClickListener{
-           var intent =  Intent()
-            intent.setAction(Intent.ACTION_GET_CONTENT)
-            intent.setType("image/*")
-            startActivity(intent)
-
+          Intent(Intent.ACTION_VIEW).setType("image/*").also{startActivity(it)}
+        }
+        findViewById<Button>(R.id.button_camera).setOnClickListener{
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{startActivity(it)}
+        }
+        findViewById<Button>(R.id.button_alarm).setOnClickListener{
+            Intent(AlarmClock.ACTION_SHOW_ALARMS).also{startActivity(it)}
         }
     }
 }
